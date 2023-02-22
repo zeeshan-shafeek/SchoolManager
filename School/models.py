@@ -28,21 +28,14 @@ class Student(models.Model):
     name = models.CharField(max_length=50, null= False)
     school = models.ForeignKey(School, on_delete= models.CASCADE)
     roll_number = models.CharField(max_length= 10, null= False, blank= True)
+
     
     def assigned_tasks(self):
-        tasks = Task.objects.filter(course__students = self)
-        if tasks:
-            status = ''
-            for student_task in tasks:
-                stauts = TaskStatus.objects.filter(task=student_task, student= self)
-                if stauts:
-                    status = ' (Done)'
-                else:
-                    status = ' (Incomplete)'
-
-            tasks = ', '.join([student_task.name + status])
-                
-            return tasks
+        all_tasks = StudentTask.objects.filter(student = self)
+        tasks = ''
+        if all_tasks:
+            
+                return  ', '.join([a_task.task.name + " (" + a_task.status + ")"  for a_task in all_tasks])
         else:
             return 'None'
     
@@ -85,16 +78,24 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
+
     def assigned_students(self):
         return ', '.join([str(student) for student in self.course.students.all()])
 
     assigned_students.short_description = 'Assigned Students'
 
-class TaskStatus(models.Model):
+class StudentTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete= models.CASCADE)
-    status = models.BooleanField(default= False)
+    status = models.CharField(max_length= 50, default= "New")
+    answer = models.CharField(max_length= 1000, default= '')
 
 
 
 
+
+@receiver(post_save, sender=Task)
+def create_or_update_studenttask(sender, instance, **kwargs):
+    students = instance.course.students.all()
+    for student in students:
+        StudentTask.objects.get_or_create(task=instance, student=student)
