@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'School',
+    'customuser',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTH_USER_MODEL = 'customuser.CustomUser'
+
 
 ROOT_URLCONF = 'SchoolManager.urls'
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
+from customuser.models import CustomUser
 from django.dispatch import receiver
 
 # Create your models here.
@@ -24,7 +25,8 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-          
+
+    user = models.OneToOneField(CustomUser, on_delete= models.CASCADE, limit_choices_to= models.Q(account_type= CustomUser.STUDENT))          
     name = models.CharField(max_length=50, null= False)
     school = models.ForeignKey(School, on_delete= models.CASCADE)
     roll_number = models.CharField(max_length= 10, null= False, blank= True)
