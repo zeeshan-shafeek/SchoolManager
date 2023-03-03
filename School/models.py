@@ -34,7 +34,6 @@ class Student(models.Model):
     
     def assigned_tasks(self):
         all_tasks = StudentTask.objects.filter(student = self)
-        tasks = ''
         if all_tasks:
             
                 return  ', '.join([a_task.task.name + " (" + a_task.status + ")"  for a_task in all_tasks])

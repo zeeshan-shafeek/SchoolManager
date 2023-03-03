@@ -3,7 +3,7 @@ from .models import CustomUser
 
 
 
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(admin.ModelAdmin):    
     list_display = ('username', 'email', 'first_name')
     list_filter = ('is_staff', 'is_superuser')
     fields = (
@@ -16,6 +16,9 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     )
 
+
+    
+    
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
