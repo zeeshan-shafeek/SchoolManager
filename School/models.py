@@ -94,7 +94,7 @@ class StudentTask(models.Model):
 
 
 
-
+# decorator hay yey
 @receiver(post_save, sender=Task)
 def create_or_update_studenttask(sender, instance, **kwargs):
     students = instance.course.students.all()

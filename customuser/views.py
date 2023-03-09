@@ -4,6 +4,17 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
+def home(request):
+    return render(request, 'dashboard.html')
+
+
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect("login")
+
+
 
 def loginpage(request):
 
@@ -16,8 +27,9 @@ def loginpage(request):
 
         if user is not None:
             login(request, user)
-            #redirect
-
+            return redirect('home')
+        else:
+            messages.info(request, 'Username OR password is incorrect!')
     context = {}
     return render(request, 'login.html', context)
 
