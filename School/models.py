@@ -55,7 +55,7 @@ class Student(models.Model):
                     last_roll_number = int(last_student_for_school.roll_number.split('-')[1])
                 else:
                     last_roll_number = 0
-                self.roll_number = f"{school_name_prefix}-{last_roll_number+1:03d}"
+                self.roll_number = f"{school_name_prefix}{last_roll_number+1:03d}"
             super().save(*args, **kwargs)
    
     

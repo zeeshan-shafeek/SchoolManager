@@ -1,22 +1,26 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
 
 
-class CustomUserAdmin(admin.ModelAdmin):    
+class CustomUserAdmin(UserAdmin):    
     list_display = ('username', 'email', 'first_name')
     list_filter = ('is_staff', 'is_superuser')
-    fields = (
-        'email',
-        'username',
-        'password',
-        'first_name',
-        'last_name',
-        'account_type',
-
+    
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+    
     )
 
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2'),
+        }),
 
+    )
     
     
 
