@@ -55,7 +55,7 @@ class Student(models.Model):
                     last_roll_number = int(last_student_for_school.roll_number.split('-')[1])
                 else:
                     last_roll_number = 0
-                self.roll_number = f"{school_name_prefix}{last_roll_number+1:03d}"
+                self.roll_number = f"{school_name_prefix}-{last_roll_number+1:03d}"
             super().save(*args, **kwargs)
    
     
@@ -63,6 +63,7 @@ class Student(models.Model):
        
 class Course(models.Model):
     name = models.CharField(max_length=100, null= False)
+    details = models.CharField(max_length= 1000, null= True)
     #students_enrolled = models.IntegerField()
     teacher = models.ForeignKey(Teacher, on_delete= models.CASCADE)
     students = models.ManyToManyField(Student)
@@ -71,9 +72,11 @@ class Course(models.Model):
         return self.name
 
 class Task(models.Model):
+    ACTIVE = 'Active'
+    CLOSED = 'Closed'
     name = models.CharField(max_length=50, null= False)
     details = models.CharField(max_length=1000, null= False)
-    # is_completed = models.BooleanField(default=False)
+    status = models.CharField(max_length=50, default= ACTIVE, null= True)
     course = models.ForeignKey(Course, on_delete= models.CASCADE)
 
     def __str__(self):

@@ -14,10 +14,21 @@
 			<a class="btn btn-primary  btn-sm btn-block" href="">Create Course</a>
 			<table class="table table-sm">
 				<tr>
-					<th></th>
 					<th>Course name</th>
-					<th>Students</th>
+					<th>Teacher</th>
+					<th>Update</th>
+					<th>Remove</th>
 				</tr>
+				{% for course in courses %}
+					<tr>
+						<td>{{course.name}}</td>
+						<td>{{course.teacher}}</td>
+						<td><a href="">Update</a></td>
+						<td><a href="">Delete</a></td>
+						
+					</tr>
+				{% endfor %}
+
 
 			</table>
 		</div>
@@ -36,6 +47,16 @@
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
+				{% for task in tasks %}
+					<tr>
+						<td>{{task.name}}</td>
+						<td>{{task.course}}</td>
+						<td>{{task.status}}</td>
+						<td><a href="">Update</a></td>
+						<td><a href="">Delete</a></td>
+						
+					</tr>
+				{% endfor %}
 		
 			</table>
 		</div>

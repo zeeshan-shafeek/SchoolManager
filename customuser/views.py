@@ -2,11 +2,33 @@ from django.shortcuts import render, redirect
 from .form import CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from School.models import *
 # Create your views here.
 
 def home(request):
-    return render(request, 'dashboard.html')
+    courses = Course.objects.all()
+    tasks = Task.objects.all()
+    tasks_count = tasks.count()
+    active_count = tasks.filter(status= Task.ACTIVE).count()
+    closed_count = tasks.filter(status= Task.CLOSED).count()
 
+
+    context = {
+        'courses': courses,
+        'tasks': tasks,
+        'tasks_count': tasks_count,
+        'active_count': active_count,
+        'closed_count': closed_count
+
+    }
+
+
+    return render(request, 'dashboard.html', context)
+
+def students(request):
+    students = Student.objects.all()
+
+    return render(request, 'students.html', {'students' : students})
 
 
 
