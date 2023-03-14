@@ -74,9 +74,15 @@ class Course(models.Model):
 class Task(models.Model):
     ACTIVE = 'Active'
     CLOSED = 'Closed'
+
+    status_types =   (
+        (ACTIVE , 'Active'),
+        (CLOSED , 'Closed'),
+        )
+    
     name = models.CharField(max_length=50, null= False)
     details = models.CharField(max_length=1000, null= False)
-    status = models.CharField(max_length=50, default= ACTIVE, null= True)
+    status = models.CharField(max_length=50, choices= status_types, default= ACTIVE, null= True)
     course = models.ForeignKey(Course, on_delete= models.CASCADE)
 
     def __str__(self):
