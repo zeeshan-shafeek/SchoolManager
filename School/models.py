@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from customuser.models import CustomUser
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Create your models here.
 class School(models.Model):
@@ -82,8 +83,9 @@ class Task(models.Model):
     
     name = models.CharField(max_length=50, null= False)
     details = models.CharField(max_length=1000, null= False)
-    status = models.CharField(max_length=50, choices= status_types, default= ACTIVE, null= True)
+    status = models.CharField(max_length=50, choices= status_types, default= ACTIVE, null= False)
     course = models.ForeignKey(Course, on_delete= models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add= True)
 
     def __str__(self):
         return self.name
@@ -95,10 +97,25 @@ class Task(models.Model):
     assigned_students.short_description = 'Assigned Students'
 
 class StudentTask(models.Model):
+    INCOMPLETE = 'Incomplete'
+    COMPLETE = 'Complete'
+
+    s_status_types =   (
+        (INCOMPLETE , 'Incomplete'),
+        (COMPLETE , 'Complete'),
+        )
+
+
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete= models.CASCADE)
-    status = models.CharField(max_length= 50, default= "New")
+    time_completed = models.DateTimeField(null=True, blank=True)
+    status = models.CharField(max_length= 50, choices= s_status_types, default= INCOMPLETE, null= False)
     answer = models.CharField(max_length= 1000, default= '')
+
+    def save(self, *args, **kwargs):
+        if self.status == self.COMPLETE and not self.time_completed:
+            self.time_completed = timezone.now()
+        super().save(*args, **kwargs)
 
 
 

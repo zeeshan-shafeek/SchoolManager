@@ -14,17 +14,16 @@
 			<a class="btn btn-primary  btn-sm btn-block" href="">Create Course</a>
 			<table class="table table-sm">
 				<tr>
+					<th></th>
 					<th>Course name</th>
 					<th>Teacher</th>
-					<th>Update</th>
-					<th>Remove</th>
 				</tr>
 				{% for course in courses %}
 					<tr>
+						<td><a class= 'btn btn-sm btn-outline-primary' href="{% url 'course' course.id %}">view</a></td>
 						<td>{{course.name}}</td>
 						<td>{{course.teacher}}</td>
-						<td><a href="">Update</a></td>
-						<td><a href="">Delete</a></td>
+
 						
 					</tr>
 				{% endfor %}
@@ -38,7 +37,7 @@
 		<h5>TASKS:</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Task</a>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_task' %}">Create Task</a>
 			<table class="table table-sm">
 				<tr>
 					<th>Task name</th>
@@ -52,8 +51,8 @@
 						<td>{{task.name}}</td>
 						<td>{{task.course}}</td>
 						<td>{{task.status}}</td>
-						<td><a href="">Update</a></td>
-						<td><a href="">Delete</a></td>
+						<td><a class= "btn btn-sm btn-info" href="{% url 'task' task.id %}">Details</a></td>
+						<td><a class= "btn btn-sm btn-danger" href="">Delete</a></td>
 						
 					</tr>
 				{% endfor %}

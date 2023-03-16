@@ -1,0 +1,85 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+	<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Task options:</h5>
+			<hr>
+            <a class="btn btn-outline-success  btn-sm btn-block" href="">Mark As Closed</a>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_task' task.id %}">Update Task</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Task</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Task Information</h5>
+			<hr>
+			<p><b>Name:</b> {{task.name}}</p>
+			<p><b>Details:</b> {{task.details}}</p>
+            <p><b>Course name:</b> {{task.course.name}}</p>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total Students</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px">{{student_count}}</h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Student</th>
+					<th>ID</th>
+					<th>Status</th>
+					<th>Date completed</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+                
+                {% for st in students_task %}
+                <tr> 
+                    <td>{{st.student.name}}</td>
+                    <td>{{st.student.roll_number}}</td>
+                    <td>{{st.status}}</td>
+                    <td>{{st.time_completed}}</td>
+                    <td><a class= "btn btn-sm btn-info" href="">Update</a></td>
+                    <td><a class= "btn btn-sm btn-danger" href="">Delete</a></td>
+                </tr>
+
+                {% endfor %}
+
+
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

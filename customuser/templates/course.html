@@ -1,0 +1,81 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+	<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Course options:</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Course</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Course</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Course Information</h5>
+			<hr>
+			<p><b>Name:</b> {{course.name}}</p>
+			<p><b>Details:</b> {{course.details}}</p>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total Students</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px">{{student_count}}</h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Task</th>
+					<th>Status</th>
+                    <th>Date Created</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+                
+                {% for task in tasks %}
+                <tr> 
+                    <td>{{task.name}}</td>
+                    <td>{{task.status}}</td>
+                    <td>{{task.date_created}}</td>
+                    <td><a class= "btn btn-sm btn-info" href="{% url 'task' task.id %}">Update</a></td>
+                    <td><a class= "btn btn-sm btn-danger" href="">Delete</a></td>
+                </tr>
+
+                {% endfor %}
+
+
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
