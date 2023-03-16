@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+{% include 'status.html' %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>COURSES:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_course' %}"><i class="fa-solid fa-plus"></i> Create Course</a>
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Course name</th>
+					<th>Teacher</th>
+				</tr>
+				{% for course in courses %}
+					<tr>
+						<td><a class= 'btn btn-sm btn-outline-primary' href="{% url 'course' course.id %}"><i class="fa-solid fa-eye"></i></a></td>
+						<td>{{course.name}}</td>
+						<td>{{course.teacher}}</td>
+
+						
+					</tr>
+				{% endfor %}
+
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5>TASKS:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_task' %}"><i class="fa-solid fa-plus"></i> Create Task</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Task name</th>
+					<th>Course</th>
+					<th>Status</th>
+					<th class="text-center">Details</th>
+					<th class="text-center">Remove</th>
+				</tr>
+				{% for task in tasks %}
+					<tr>
+						<td>{{task.name}}</td>
+						<td>{{task.course}}</td>
+						<td {% if task.status == 'Active' %}class="text-success"{% elif task.status == 'Closed' %}class="text-danger"{% endif %}>{{task.status}}</td>
+						<td class="text-center"><a class= "btn btn-sm btn-info" href="{% url 'task' task.id %}">Details</a></td>
+						<td class="text-center"><a class= "btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}"><i class="fa-solid fa-trash-can"></i></a></td>
+						
+					</tr>
+				{% endfor %}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %}

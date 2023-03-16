@@ -9,8 +9,8 @@
 		<div class="card card-body">
 			<h5>Course options:</h5>
 			<hr>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Course</a>
-			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Course</a>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_course' course.id %}">Update Course</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'delete_course' course.id %}">Delete Course</a>
 
 		</div>
 	</div>
@@ -36,11 +36,15 @@
 
 <br>
 <div class="row">
+	
 	<div class="col">
+		
 		<div class="card card-body">
+			
 			<form method="get">
-
-		    <button class="btn btn-primary" type="submit">Search</button>
+			<a class="btn btn-success float-right" type="submit" href="{% url 'create_task' course.id %}"><i class="fa-solid fa-plus"></i>  Add Task</a>
+			
+		    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i>  Search</button>
 		  </form>
 		</div>
 	</div>
@@ -56,17 +60,17 @@
 					<th>Task</th>
 					<th>Status</th>
                     <th>Date Created</th>
-					<th>Update</th>
-					<th>Remove</th>
+					<th class="text-center">Details</th>
+					<th class="text-center">Remove</th>
 				</tr>
                 
                 {% for task in tasks %}
                 <tr> 
                     <td>{{task.name}}</td>
-                    <td>{{task.status}}</td>
+                    <td {% if task.status == 'Active' %}class="text-success"{% elif task.status == 'Closed' %}class="text-danger"{% endif %}>{{task.status}}</td>
                     <td>{{task.date_created}}</td>
-                    <td><a class= "btn btn-sm btn-info" href="{% url 'task' task.id %}">Update</a></td>
-                    <td><a class= "btn btn-sm btn-danger" href="">Delete</a></td>
+                    <td class="text-center"><a class= "btn btn-sm btn-info" href="{% url 'task' task.id %}">Details</a></td>
+                    <td class="text-center"><a class= "btn btn-sm btn-danger "  href="{% url 'delete_task' task.id %}"><i class="fa-solid fa-trash-can"></i></a></td>
                 </tr>
 
                 {% endfor %}
